@@ -55,28 +55,28 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.camera),
         onPressed: () async {
-          // await screenshotController
-          //     .capture(delay: Duration(milliseconds: 10))
-          //     .then((capturedImage) async {
-          //   image1 = capturedImage;
-          //   setState(() {});
-          //   print("screenshot oldi");
-          // }).catchError((onError) {
-          //   print(onError);
-          // });
+          await screenshotController
+              .capture(delay: Duration(milliseconds: 10))
+              .then((capturedImage) async {
+            image1 = capturedImage;
+            setState(() {});
+            print("screenshot oldi");
+          }).catchError((onError) {
+            print(onError);
+          });
 
           await screenshotController
               .capture(delay: const Duration(seconds: 2))
-              .then((capturedImage) async {
-            if (capturedImage != null) {
+              .then((Uint8List? image) async {
+            if (image != null) {
               final directory = await getApplicationDocumentsDirectory();
               print(directory.path);
               final imagePath =
                   await File('${directory.path}/rasm.jpg').create();
               print(imagePath.path);
-              await imagePath.writeAsBytes(capturedImage);
+              await imagePath.writeAsBytes(image);
               setState(() {});
-              print(capturedImage.toString());
+              print(image.toString());
               print(imagePath.path);
 
               /// Share Plugin
